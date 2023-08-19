@@ -1,7 +1,13 @@
 import React from 'react'
 
+import Timeline from './components/Timeline'
+
 const Home = () => {
-  return <div></div>
+  return (
+    <div>
+      <Timeline />
+    </div>
+  )
 }
 
 export default Home
