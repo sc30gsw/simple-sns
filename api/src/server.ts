@@ -2,10 +2,9 @@ import { PrismaClient } from '@prisma/client'
 import express from 'express'
 import bcrypt from 'bcrypt'
 import {
-  validEmailFormat,
+  validEmailExistsAndFormat,
   validPasswordLength,
-  validUsernameLength,
-  validUsernameOrEmail,
+  validUsernameExistsAndLength,
 } from './services/validation/userValid'
 import { printErrors } from './services/validation/validation'
 
@@ -20,10 +19,9 @@ app.use(express.json())
 // 新規ユーザー登録API
 app.post(
   '/api/auth/register',
-  validUsernameLength,
-  validEmailFormat,
+  validUsernameExistsAndLength,
+  validEmailExistsAndFormat,
   validPasswordLength,
-  validUsernameOrEmail,
   printErrors,
   async (req: express.Request, res: express.Response) => {
     const { username, email, password } = req.body
@@ -47,6 +45,9 @@ app.post(
     return res.status(201).json({ user })
   },
 )
+
+// ユーザーログインAPI
+app.post('/api/auth/login', validEmailExistsAndFormat, validPasswordLength)
 
 app.listen(PORT, () => {
   console.log(`server is running on Port ${PORT}`)
