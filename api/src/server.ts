@@ -1,4 +1,3 @@
-import { PrismaClient } from '@prisma/client'
 import express from 'express'
 import 'dotenv/config'
 import authRouter from './routers/auth'
