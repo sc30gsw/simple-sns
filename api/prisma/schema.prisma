@@ -11,7 +11,7 @@ datasource db {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
+  id       String @id @default(dbgenerated("uuid_generate_v4()"))
   username String
   email    String @unique
   password String
@@ -19,9 +19,9 @@ model User {
 }
 
 model Post {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(dbgenerated("uuid_generate_v4()"))
   content   String
   createdAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    Int
+  userId    String
 }
