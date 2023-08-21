@@ -14,14 +14,14 @@ const Navbar = () => {
           <ul className="flex space-x-4">
             <>
               <Link
-                href="/login"
-                className="bg-white text-gray-900 py-2 px-3 rounded-lg font-medium hover:bg-gray-300 duration-300"
+                href="/auth/login"
+                className="bg-white text-gray-900 py-2 px-3 rounded-lg font-medium hover:bg-gray-300 transition-all duration-300"
               >
                 ログイン
               </Link>
               <Link
-                href="/signup"
-                className="bg-white text-gray-900 py-2 px-3 rounded-lg font-medium hover:bg-gray-300 duration-300"
+                href="/auth/signup"
+                className="bg-white text-gray-900 py-2 px-3 rounded-lg font-medium hover:bg-gray-300 transition-all duration-300"
               >
                 サインアップ
               </Link>
