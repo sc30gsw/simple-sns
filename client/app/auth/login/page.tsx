@@ -1,6 +1,49 @@
-import React from 'react'
+'use client'
+import { useRouter } from 'next/navigation'
+import React, { useState } from 'react'
 
 const Login = () => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [emailErrMsg, setEmailErrMsg] = useState('')
+  const [passwordErrMsg, setPasswordErrMsg] = useState('')
+  const router = useRouter()
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    // 新規登録APIの呼び出し
+    try {
+      const response = await fetch('http://localhost:4000/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      })
+
+      const res = await response.json()
+      if (!response.ok) {
+        if (res.errors) {
+          return res.errors.map((err: any) => {
+            err.path === 'email'
+              ? setEmailErrMsg(err.msg)
+              : setPasswordErrMsg(err.msg)
+          })
+        } else {
+          return alert(res.msg)
+        }
+      }
+
+      router.push('/')
+
+      setEmail('')
+      setPassword('')
+    } catch (err) {
+      alert('予期せぬエラーが発生しました')
+    }
+  }
   return (
     <div
       style={{ height: '88vh' }}
@@ -13,7 +56,7 @@ const Login = () => {
       </div>
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-          <form>
+          <form onSubmit={handleSubmit}>
             <div>
               <label
                 htmlFor="email"
@@ -28,7 +71,10 @@ const Login = () => {
                 autoComplete="email"
                 required
                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 text-base focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
+              <span className="text-red-500">{emailErrMsg}</span>
             </div>
             <div className="mt-6">
               <label
@@ -44,7 +90,10 @@ const Login = () => {
                 autoComplete="current-password"
                 required
                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 text-base focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
+              <span className="text-red-500">{passwordErrMsg}</span>
             </div>
             <div className="mt-6">
               <button

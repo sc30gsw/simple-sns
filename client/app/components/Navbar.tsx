@@ -23,7 +23,7 @@ const Navbar = () => {
                 href="/auth/signup"
                 className="bg-white text-gray-900 py-2 px-3 rounded-lg font-medium hover:bg-gray-300 transition-all duration-300"
               >
-                サインアップ
+                新規登録
               </Link>
             </>
           </ul>
