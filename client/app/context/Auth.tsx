@@ -1,4 +1,5 @@
 'use client'
+import { useRouter } from 'next/navigation'
 import React, { createContext, useContext, useEffect, useState } from 'react'
 
 type AuthContextType = {
@@ -27,6 +28,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     username: string
   } | null>(null)
 
+  const router = useRouter()
+
   useEffect(() => {
     const storedToken = localStorage.getItem('auth_token')
     if (storedToken) {
@@ -42,17 +45,22 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           })
 
           const res = await response.json()
-          if (!response.ok) return alert(res.msg)
+          if (!response.ok) {
+            alert(res.msg)
+            router.push('/auth/login')
+            return
+          }
 
           setUser(res.user)
         } catch (err) {
           console.log(err)
+          router.push('/auth/login')
         }
       }
 
       getLoginUser()
     }
-  }, [token])
+  }, [token, router])
 
   const login = (newToken: string) => {
     localStorage.setItem('auth_token', newToken)

@@ -37,7 +37,9 @@ const Timeline = ({ posts }: TimelineProps) => {
       const res = await response.json()
       if (!response.ok) {
         if (res.errors) return setErrContentMsg(res.errors[0].msg)
-        return alert(res.msg)
+        alert(res.msg)
+        router.push('/auth/login')
+        return
       }
 
       router.refresh()
