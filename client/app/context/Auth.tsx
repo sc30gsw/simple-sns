@@ -1,13 +1,14 @@
 'use client'
-
-import React, { createContext, useContext } from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react'
 
 type AuthContextType = {
+  token: string
   login: (token: string) => void
   logout: () => void
 }
 
 const AuthContext = createContext<AuthContextType>({
+  token: '',
   login: () => {},
   logout: () => {},
 })
@@ -17,12 +18,27 @@ export const useAuth = () => {
 }
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const login = async (token: string) =>
-    localStorage.setItem('auth_token', token)
+  const [token, setToken] = useState<string>('')
 
-  const logout = () => localStorage.removeItem('auth_token')
+  useEffect(() => {
+    const storedToken = localStorage.getItem('auth_token')
+    if (storedToken) {
+      setToken(storedToken)
+    }
+  }, [])
+
+  const login = (newToken: string) => {
+    localStorage.setItem('auth_token', newToken)
+    setToken(newToken)
+  }
+
+  const logout = () => {
+    localStorage.removeItem('auth_token')
+    setToken('')
+  }
 
   const value = {
+    token,
     login,
     logout,
   }
