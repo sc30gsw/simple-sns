@@ -5,8 +5,8 @@ import {
   validUsernameExistsAndLength,
 } from '../services/validation/userValid'
 import { printErrors } from '../services/validation/validation'
-import { PrismaClient } from '@prisma/client'
-import { login, register } from '../services/authService'
+import { getLoginUser, login, register } from '../services/authService'
+import { isAuthenticated } from '../middleware/isAuthenticated'
 
 const router = express.Router()
 
@@ -30,6 +30,14 @@ router.post(
   printErrors,
   (req: express.Request, res: express.Response) => {
     login(req, res)
+  },
+)
+
+router.get(
+  '/find',
+  isAuthenticated,
+  (req: express.Request, res: express.Response) => {
+    getLoginUser(req, res)
   },
 )
 

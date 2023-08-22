@@ -63,3 +63,24 @@ export const login = async (req: express.Request, res: express.Response) => {
     return res.status(500).json(err)
   }
 }
+
+// ログインユーザー取得API
+export const getLoginUser = async (
+  req: express.Request,
+  res: express.Response,
+) => {
+  try {
+    const user = await prisma.user.findUnique({ where: { id: req.userId } })
+
+    if (!user)
+      return res.status(404).json({ msg: 'ユーザーが見つかりませんでした' })
+
+    return res
+      .status(200)
+      .json({
+        user: { id: user.id, email: user.email, username: user.username },
+      })
+  } catch (err) {
+    return res.status(500).json(err)
+  }
+}
