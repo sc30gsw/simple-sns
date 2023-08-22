@@ -8,9 +8,9 @@ export type User = {
   profile: Profile
 }
 
-type Profile = {
+export type Profile = {
   id: string
-  dio?: string
+  bio?: string
   profileImgUrl?: string
   userId: string
   user: User
