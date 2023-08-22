@@ -17,7 +17,7 @@ router.post(
 )
 
 router.get('/getPosts', (req: express.Request, res: express.Response) => {
-  getPosts(req, res)
+  getPosts(res)
 })
 
 export default router

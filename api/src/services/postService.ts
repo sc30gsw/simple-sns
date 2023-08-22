@@ -22,11 +22,14 @@ export const post = async (req: express.Request, res: express.Response) => {
 }
 
 // 最新投稿取得API
-export const getPosts = async (req: express.Request, res: express.Response) => {
+export const getPosts = async (res: express.Response) => {
   try {
     const posts = await prisma.post.findMany({
       take: 10,
       orderBy: { createdAt: 'desc' },
+      include: {
+        user: true,
+      },
     })
 
     return res.status(200).json(posts)
