@@ -25,7 +25,7 @@ const Post = ({ post }: PostProps) => {
             </p>
           </div>
         </div>
-        <p className="text-gray-700">{post.content}</p>
+        <p className="text-gray-700 break-words">{post.content}</p>
       </div>
     </div>
   )
