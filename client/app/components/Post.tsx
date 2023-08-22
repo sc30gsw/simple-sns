@@ -1,6 +1,7 @@
-import { Post } from 'app/types/Post'
 import Image from 'next/image'
 import React from 'react'
+
+import { Post } from '../types/Post'
 
 type PostProps = {
   post: Post
