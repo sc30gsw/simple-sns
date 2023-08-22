@@ -5,4 +5,13 @@ export type User = {
   username: string
   email: string
   posts: Post[]
+  profile: Profile
+}
+
+export type Profile = {
+  id: string
+  bio?: string
+  profileImgUrl?: string
+  userId: string
+  user: User
 }

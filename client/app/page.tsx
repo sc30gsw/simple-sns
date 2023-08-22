@@ -12,7 +12,7 @@ const getPosts = async (): Promise<Post[]> => {
   })
 
   const posts: Post[] = await response.json()
-  return posts
+  return posts ? posts : []
 }
 
 const Home = async () => {

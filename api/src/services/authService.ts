@@ -2,6 +2,7 @@ import express from 'express'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { PrismaClient } from '@prisma/client'
+import { generateIdenticon } from '../utils/generateIdenticon'
 
 const prisma = new PrismaClient()
 
@@ -16,6 +17,8 @@ export const register = async (req: express.Request, res: express.Response) => {
         .status(409)
         .json({ msg: 'メールアドレスはすでに登録されています' })
 
+    const defaultIconImage = generateIdenticon(username)
+
     const hashedPassword = await bcrypt.hash(password, 10)
 
     const user = await prisma.user.create({
@@ -23,6 +26,12 @@ export const register = async (req: express.Request, res: express.Response) => {
         username,
         email,
         password: hashedPassword,
+        profile: {
+          create: {
+            bio: 'はじめまして',
+            profileImgUrl: defaultIconImage,
+          },
+        },
       },
     })
 
@@ -75,11 +84,9 @@ export const getLoginUser = async (
     if (!user)
       return res.status(404).json({ msg: 'ユーザーが見つかりませんでした' })
 
-    return res
-      .status(200)
-      .json({
-        user: { id: user.id, email: user.email, username: user.username },
-      })
+    return res.status(200).json({
+      user: { id: user.id, email: user.email, username: user.username },
+    })
   } catch (err) {
     return res.status(500).json(err)
   }
