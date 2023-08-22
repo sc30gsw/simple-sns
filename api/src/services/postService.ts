@@ -28,7 +28,11 @@ export const getPosts = async (res: express.Response) => {
       take: 10,
       orderBy: { createdAt: 'desc' },
       include: {
-        user: true,
+        user: {
+          include: {
+            profile: true,
+          },
+        },
       },
     })
 

@@ -14,7 +14,7 @@ const Post = ({ post }: PostProps) => {
         <div className="flex items-center mb-2">
           <Image
             className="w-10 h-10 rounded-full mr-2"
-            src="https://via.placeholder.com/150"
+            src={post.user.profile.profileImgUrl as string}
             alt="User Avatar"
             width={100}
             height={24}
