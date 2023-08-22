@@ -1,4 +1,5 @@
 'use client'
+import { useAuth } from 'app/context/Auth'
 import { useRouter } from 'next/navigation'
 import React, { Suspense, useState } from 'react'
 
@@ -11,6 +12,7 @@ type TimelineProps = {
 }
 
 const Timeline = ({ posts }: TimelineProps) => {
+  const { token } = useAuth()
   const [content, setContent] = useState('')
   const [errContentMsg, setErrContentMsg] = useState('')
 
@@ -23,7 +25,10 @@ const Timeline = ({ posts }: TimelineProps) => {
     try {
       const response = await fetch('http://localhost:4000/api/posts/post', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify({
           content,
         }),
@@ -32,6 +37,7 @@ const Timeline = ({ posts }: TimelineProps) => {
       const res = await response.json()
       if (!response.ok) {
         if (res.errors) return setErrContentMsg(res.errors[0].msg)
+        return alert(res.msg)
       }
 
       router.refresh()
