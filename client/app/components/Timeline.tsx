@@ -1,8 +1,8 @@
 'use client'
-import { useAuth } from 'app/context/Auth'
 import { useRouter } from 'next/navigation'
 import React, { Suspense, useState } from 'react'
 
+import { useAuth } from '../context/Auth'
 import type { Post as PostModel } from '../types/Post'
 import Post from './Post'
 import Spinner from './Spinner'
