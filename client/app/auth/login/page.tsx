@@ -2,12 +2,17 @@
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 
+import { useAuth } from '../../context/Auth'
+
 const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [emailErrMsg, setEmailErrMsg] = useState('')
   const [passwordErrMsg, setPasswordErrMsg] = useState('')
+
   const router = useRouter()
+
+  const { login } = useAuth()
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -35,6 +40,9 @@ const Login = () => {
           return alert(res.msg)
         }
       }
+
+      const token = res.token
+      login(token)
 
       router.push('/')
 

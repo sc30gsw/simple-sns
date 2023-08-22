@@ -5,6 +5,7 @@ import { Inter } from 'next/font/google'
 import React from 'react'
 
 import Navbar from './components/Navbar'
+import { AuthProvider } from './context/Auth'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,8 +18,10 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="ja">
       <body className={inter.className}>
-        <Navbar />
-        {children}
+        <AuthProvider>
+          <Navbar />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   )
