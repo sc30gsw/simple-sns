@@ -72,7 +72,7 @@ const Timeline = ({ posts }: TimelineProps) => {
         </div>
         {posts.map((post: PostModel) => (
           <Suspense key={post.id} fallback={<Spinner />}>
-            <Post post={post} />
+            <Post post={post} isProfile={false} />
           </Suspense>
         ))}
       </main>
