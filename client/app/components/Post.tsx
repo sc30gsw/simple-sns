@@ -1,7 +1,12 @@
+import { Post } from 'app/types/Post'
 import Image from 'next/image'
 import React from 'react'
 
-const Post = () => {
+type PostProps = {
+  post: Post
+}
+
+const Post = ({ post }: PostProps) => {
   return (
     <div className="bg-white shadow-md rounded p-4 mb-4">
       <div className="mb-4">
@@ -14,11 +19,13 @@ const Post = () => {
             height={24}
           />
           <div>
-            <h2 className="font-semibold text-md">shincode</h2>
-            <p className="text-gray-500 text-sm">04/04 13:12</p>
+            <h2 className="font-semibold text-md">{post.user?.username}</h2>
+            <p className="text-gray-500 text-sm">
+              {new Date(post.createdAt).toLocaleString()}
+            </p>
           </div>
         </div>
-        <p className="text-gray-700">はじめての投稿です。</p>
+        <p className="text-gray-700">{post.content}</p>
       </div>
     </div>
   )
